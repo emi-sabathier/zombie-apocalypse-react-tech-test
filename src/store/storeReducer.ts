@@ -20,6 +20,6 @@ export function storeReducer(state, action) {
             };
         }
         default:
-            throw new Error();
+            return state;
     }
 }

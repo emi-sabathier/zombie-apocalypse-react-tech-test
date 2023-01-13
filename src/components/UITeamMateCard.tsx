@@ -1,16 +1,17 @@
-import React, { ReactElement } from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import React, { ReactElement, useContext } from 'react';
 import styled from 'styled-components';
 import { palette } from '../assets/styles/palette';
-import addButton from '../assets/images/add.png';
-import deleteButton from '../assets/images/delete.png';
 import { Mate } from '../Model/MateModel';
 import { useNavigate } from 'react-router-dom';
+import { UIAddDeleteMate } from './shared/UIAddDeleteMate/UIAddDeleteMate';
+import { StoreContext } from '../context/StoreContext';
 
 const RADIUS = 5;
 const PADDING = 10;
 const MARGIN = 10;
 const MARGIN_BOTTOM = 10;
-const IMAGE_WIDTH = 30;
 
 type UITeamMateCardProps = {
     mate: Mate;
@@ -18,10 +19,12 @@ type UITeamMateCardProps = {
 
 export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
     const navigate = useNavigate();
+    const { state } = useContext(StoreContext);
+    const isMateExists = state.matesList.some(m => m.id === mate.id);
     const { avatar, email, first_name, id, last_name } = mate;
 
     return (
-        <CardContainer>
+        <CardContainer isMateSelected={isMateExists}>
             <P>{`${mate.first_name}`}</P>
             <AvatarButton
                 type="button"
@@ -29,16 +32,20 @@ export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
                 <Avatar src={`${mate.avatar}`} alt={`${mate.avatar}`} />
             </AvatarButton>
             <ButtonsContainer>
-                <button type="button">
-                    <ButtonImage src={addButton} alt="ajouter un.e team mate" />
-                </button>
-                <button type="button">
-                    <ButtonImage src={deleteButton} alt="delete un.e team mate" />
-                </button>
+                <UIAddDeleteMate mate={mate} />
             </ButtonsContainer>
         </CardContainer>
     );
 }
+
+const CardContainer = styled.section`
+    border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
+    padding: ${PADDING}px;
+    border-radius: ${RADIUS}px;
+    background-color: ${palette.white};
+    margin: ${MARGIN}px;
+    width: 80%;
+`;
 
 const Avatar = styled.img`
     border-radius: ${RADIUS}px;
@@ -49,10 +56,6 @@ const AvatarButton = styled.button`
     width: 100%;
 `;
 
-const ButtonImage = styled.img`
-    width: ${IMAGE_WIDTH}px;
-`;
-
 const ButtonsContainer = styled.div`
     text-align: center;
 `;
@@ -60,12 +63,4 @@ const ButtonsContainer = styled.div`
 const P = styled.p`
     text-align: center;
     margin-bottom: ${MARGIN_BOTTOM}px;
-`;
-
-const CardContainer = styled.section`
-    padding: ${PADDING}px;
-    border-radius: ${RADIUS}px;
-    background-color: ${palette.white};
-    margin: ${MARGIN}px;
-    width: 80%;
 `;
