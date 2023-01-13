@@ -23,7 +23,7 @@ export function MateProfile() {
                     <NameTitle>
                         {state.first_name} {state.last_name}
                     </NameTitle>
-                    <a href={`${state.email}`}>{state.email}</a>
+                    <a href={`mailto:${state.email}`}>{state.email}</a>
                     <ButtonsContainer>
                         <UIAddDeleteMate />
                     </ButtonsContainer>
