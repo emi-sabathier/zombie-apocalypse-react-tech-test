@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import addButton from '../../../assets/images/add.png';
 import deleteButton from '../../../assets/images/delete.png';
 import styled from 'styled-components';
@@ -15,31 +15,33 @@ type UIAddDeleteMateProps = {
 
 export function UIAddDeleteMate({ mate }: UIAddDeleteMateProps) {
     const { dispatch } = useContext(StoreContext);
+    const { state } = useContext(StoreContext);
+    const isMateExists = state.matesList.some(m => m.id === mate.id);
 
-    function addMate() {
+    function addMate(): void {
         dispatch({
             type: 'ADD_MATE',
             payload: mate,
         });
     }
 
-    function deleteMate() {
+    function deleteMate(): void {
         dispatch({
             type: 'DELETE_MATE',
             payload: mate.id,
         });
     }
 
-    return (
-        <>
-            <button type="button" onClick={() => addMate()}>
-                <ButtonImage src={addButton} alt="ajouter un.e team mate" />
+    function createButton(method, icon): ReactElement {
+        const iconPath = icon === 'deleteButton' ? deleteButton : addButton;
+        return (
+            <button type="button" onClick={() => method()}>
+                <ButtonImage src={iconPath} alt="delete un.e team mate" />
             </button>
-            <button type="button" onClick={() => deleteMate()}>
-                <ButtonImage src={deleteButton} alt="delete un.e team mate" />
-            </button>
-        </>
-    );
+        );
+    }
+
+    return <>{isMateExists ? createButton(deleteMate, 'deleteButton') : createButton(addMate, 'addButton')}</>;
 }
 
 const ButtonImage = styled.img`
