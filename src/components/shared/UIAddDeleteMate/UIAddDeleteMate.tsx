@@ -6,6 +6,7 @@ import deleteButton from '../../../assets/images/delete.png';
 import styled from 'styled-components';
 import { StoreContext } from '../../../context/StoreContext';
 import { Mate } from '../../../Model/MateModel';
+import { useIsExists } from '../../../hooks/useIsExists';
 
 const IMAGE_WIDTH = 30;
 
@@ -15,8 +16,7 @@ type UIAddDeleteMateProps = {
 
 export function UIAddDeleteMate({ mate }: UIAddDeleteMateProps) {
     const { dispatch } = useContext(StoreContext);
-    const { state } = useContext(StoreContext);
-    const isMateExists = state.matesList.some(m => m.id === mate.id);
+    const isMateExists = useIsExists(mate);
 
     function addMate(): void {
         dispatch({

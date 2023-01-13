@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { palette } from '../assets/styles/palette';
 import { Mate } from '../Model/MateModel';
 import { useNavigate } from 'react-router-dom';
 import { UIAddDeleteMate } from './shared/UIAddDeleteMate/UIAddDeleteMate';
-import { StoreContext } from '../context/StoreContext';
+import { useIsExists } from '../hooks/useIsExists';
 
 const RADIUS = 5;
 const PADDING = 10;
@@ -19,8 +19,7 @@ type UITeamMateCardProps = {
 
 export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
     const navigate = useNavigate();
-    const { state } = useContext(StoreContext);
-    const isMateExists = state.matesList.some(m => m.id === mate.id);
+    const isMateExists = useIsExists(mate);
     const { avatar, email, first_name, id, last_name } = mate;
 
     return (
