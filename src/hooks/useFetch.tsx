@@ -14,8 +14,10 @@ export const useFetch = <T,>(url: string): UseFetchDataType<T> => {
             try {
                 const res = await fetch(url);
                 const json = await res?.json();
-                setDataList(json);
-                setIsLoading(false);
+                if (json.data.length > 0) {
+                    setDataList(json);
+                    setIsLoading(false);
+                }
             } catch (e) {
                 if (e instanceof Error) {
                     throw new Error(e.message);

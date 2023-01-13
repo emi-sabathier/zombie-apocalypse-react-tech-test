@@ -12,5 +12,7 @@ export function UIContainer({ children }: UIContainerProps): ReactElement {
 }
 
 const Container = styled.div`
+    display: flex;
+    justify-content: center;
     margin: ${MARGIN}px;
 `;

@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { palette } from '../../../assets/styles/palette';
-import addButton from '../../../assets/images/add.png';
-import deleteButton from '../../../assets/images/delete.png';
+import { palette } from '../assets/styles/palette';
+import addButton from '../assets/images/add.png';
+import deleteButton from '../assets/images/delete.png';
+import { Mate } from '../Model/MateModel';
+import { useNavigate } from 'react-router-dom';
 
 const RADIUS = 5;
 const PADDING = 10;
@@ -10,23 +12,22 @@ const MARGIN = 10;
 const MARGIN_BOTTOM = 10;
 const IMAGE_WIDTH = 30;
 
-type MateType = {
-    id: number;
-    avatar: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-};
-
 type UITeamMateCardProps = {
-    mate: MateType;
+    mate: Mate;
 };
 
 export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
+    const navigate = useNavigate();
+    const { avatar, email, first_name, id, last_name } = mate;
+
     return (
         <CardContainer>
             <P>{`${mate.first_name}`}</P>
-            <Avatar src={`${mate.avatar}`} alt={`${mate.avatar}`} />
+            <AvatarButton
+                type="button"
+                onClick={() => navigate(`/mates/${mate.id}`, { state: { avatar, email, first_name, id, last_name } })}>
+                <Avatar src={`${mate.avatar}`} alt={`${mate.avatar}`} />
+            </AvatarButton>
             <ButtonsContainer>
                 <button type="button">
                     <ButtonImage src={addButton} alt="ajouter un.e team mate" />
@@ -41,6 +42,10 @@ export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
 
 const Avatar = styled.img`
     border-radius: ${RADIUS}px;
+    width: 100%;
+`;
+
+const AvatarButton = styled.button`
     width: 100%;
 `;
 
