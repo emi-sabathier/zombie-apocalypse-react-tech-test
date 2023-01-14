@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { palette } from '../assets/styles/palette';
@@ -17,7 +15,11 @@ type UITeamMateCardProps = {
     mate: Mate;
 };
 
-export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
+export type SectionProps = {
+    isMateSelected: boolean;
+};
+
+export function UIMateCard({ mate }: UITeamMateCardProps): ReactElement {
     const navigate = useNavigate();
     const isMateExists = useIsExists(mate);
     const { avatar, email, first_name, id, last_name } = mate;
@@ -37,7 +39,7 @@ export function UITeamMateCard({ mate }: UITeamMateCardProps): ReactElement {
     );
 }
 
-const CardContainer = styled.section`
+const CardContainer = styled.section<SectionProps>`
     border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
     padding: ${PADDING}px;
     border-radius: ${RADIUS}px;

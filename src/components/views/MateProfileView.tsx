@@ -6,18 +6,21 @@ import { UIContainer } from '../shared/UIContainer/UIContainer';
 import { palette } from '../../assets/styles/palette';
 import { fontSizes } from '../../assets/styles/fontSizes';
 import { UIAddDeleteMate } from '../shared/UIAddDeleteMate/UIAddDeleteMate';
+import { useIsExists } from '../../hooks/useIsExists';
+import { SectionProps } from '../UIMateCard';
 
 const RADIUS = 5;
 const WIDTH = '50%';
 const PADDING = 10;
 
-export function MateProfile() {
+export function MateProfileView() {
     const { state } = useLocation();
+    const isMateExists = useIsExists(state);
     useDocumentTitle(`Profil de ${state.first_name} ${state.last_name}`);
 
     return (
         <UIContainer>
-            <ProfileContainer>
+            <ProfileContainer isMateSelected={isMateExists}>
                 <Avatar src={`${state.avatar}`} alt={`${state.first_name} ${state.last_name} avatar`} />
                 <DetailsContainer>
                     <NameTitle>
@@ -32,6 +35,15 @@ export function MateProfile() {
         </UIContainer>
     );
 }
+
+const ProfileContainer = styled.section<SectionProps>`
+    border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
+    width: ${WIDTH};
+    background-color: ${palette.white};
+    border-radius: ${RADIUS}px;
+    padding: ${PADDING}px;
+    display: flex;
+`;
 
 const ButtonsContainer = styled.div`
     flex: 1;
@@ -50,15 +62,6 @@ const NameTitle = styled.h2`
     font-size: ${fontSizes.xlarge};
     font-weight: 700;
 `;
-
-const ProfileContainer = styled.section`
-    width: ${WIDTH};
-    background-color: ${palette.white};
-    border-radius: ${RADIUS}px;
-    padding: ${PADDING}px;
-    display: flex;
-`;
-
 const Avatar = styled.img`
     border-radius: ${RADIUS}px;
     width: 50%;

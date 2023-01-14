@@ -2,20 +2,20 @@
 // @ts-nocheck
 import React from 'react';
 import './assets/styles/global.css';
-import { UIHeader } from './components/UIHeader';
+import { UIHeader } from './components/navigation/UIHeader';
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './components/views/Home';
-import { NotFound } from './components/views/NotFound';
-import { MateProfile } from './components/views/MateProfile';
+import { HomeView } from './components/views/HomeView';
+import { NotFoundView } from './components/views/NotFoundView';
+import { MateProfileView } from './components/views/MateProfileView';
 
 function App() {
     return (
         <>
             <UIHeader />
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/mates/:id" element={<MateProfile />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/" element={<HomeView />} />
+                <Route path="/mates/:id" element={<MateProfileView />} />
+                <Route path="*" element={<NotFoundView />} />
             </Routes>
         </>
     );

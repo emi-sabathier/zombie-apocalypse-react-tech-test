@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { fontSizes } from '../../assets/styles/fontSizes';
 import { palette } from '../../assets/styles/palette';
 
-export function NotFound() {
+export function NotFoundView() {
     return (
         <Container>
             <P>La route n&apos;existe pas</P>

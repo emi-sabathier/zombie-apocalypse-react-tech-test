@@ -1,21 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import { UIContainer } from '../shared/UIContainer/UIContainer';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { UITeamMateCard } from '../UITeamMateCard';
+import { UIMateCard } from '../UIMateCard';
 import styled from 'styled-components';
 import { useFetch } from '../../hooks/useFetch';
 import { Spinner } from '../Spinner';
 import { Mate } from '../../Model/MateModel';
 import { ApiResponseModel } from '../../Model/ApiResponseModel';
-import { StoreContext } from '../../context/StoreContext';
+import { API_URL } from '../../constants/constants';
 
-export function Home(): ReactElement {
-    const { state } = useContext(StoreContext);
-    console.log('store', state.matesList);
+export function HomeView(): ReactElement {
     useDocumentTitle('Zombie Apocalypse - Accueil');
-    const { dataList, isLoading } = useFetch<ApiResponseModel>('https://reqres.in/api/users?per_page=12');
+    const { dataList, isLoading } = useFetch<ApiResponseModel>(API_URL);
 
     return (
         <UIContainer>
@@ -24,7 +22,7 @@ export function Home(): ReactElement {
             ) : (
                 <CardsContainer>
                     {dataList?.data.map((mate: Mate) => (
-                        <UITeamMateCard key={mate.id} mate={mate} />
+                        <UIMateCard key={mate.id} mate={mate} />
                     ))}
                 </CardsContainer>
             )}
