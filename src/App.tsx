@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './assets/styles/global.css';
+import { UIHeader } from './components/navigation/UIHeader';
+import { Route, Routes } from 'react-router-dom';
+import { HomeView } from './components/views/HomeView';
+import { NotFoundView } from './components/views/NotFoundView';
+import { MateProfileView } from './components/views/MateProfileView';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <UIHeader />
+            <Routes>
+                <Route path="/" element={<HomeView />} />
+                <Route path="/mates/:id" element={<MateProfileView />} />
+                <Route path="*" element={<NotFoundView />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;
