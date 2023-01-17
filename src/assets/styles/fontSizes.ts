@@ -7,5 +7,5 @@ export const fontSizes: FontSizesType = {
     regular: '1.4rem',
     large: '2rem',
     xlarge: '2.6rem',
-    headerTitle: '5rem',
+    xxlarge: '5rem',
 };

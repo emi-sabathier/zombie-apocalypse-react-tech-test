@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import styled from 'styled-components';
-import { palette } from '../assets/styles/palette';
-import { fontSizes } from '../assets/styles/fontSizes';
-import { dictionary } from '../assets/dictionary';
-import arrowBack from '../assets/images/arrow-left.png';
+import { palette } from '../../assets/styles/palette';
+import { fontSizes } from '../../assets/styles/fontSizes';
+import { dictionary } from '../../assets/dictionary';
+import arrowBack from '../../assets/images/arrow-left.png';
 import { useMatch, useNavigate } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
 
 const PADDING_VERTICAL = 20;
 const PADDING_TOP = 10;
@@ -12,6 +13,8 @@ const PADDING_TOP = 10;
 export function UIHeader(): ReactElement {
     const navigate = useNavigate();
     const match = useMatch('/');
+    const { state } = useContext(StoreContext);
+    const matesNumber = state.matesList.length;
 
     function IsBackButton() {
         if (match === null) {
@@ -31,7 +34,9 @@ export function UIHeader(): ReactElement {
                 <IsBackButton />
                 <LogoAndTitleContainer>
                     <Title>{dictionary.header.title}</Title>
-                    <SubTitle>{dictionary.header.subtitle} 2</SubTitle>
+                    <SubTitle>
+                        {dictionary.header.subtitle}: {matesNumber}
+                    </SubTitle>
                 </LogoAndTitleContainer>
             </Header>
         </>
@@ -59,9 +64,12 @@ const ArrowIcon = styled.img`
 const Title = styled.h1`
     text-align: center;
     color: ${palette.white};
-    font-size: ${fontSizes.headerTitle};
+    font-size: ${fontSizes.xxlarge};
     font-weight: 700;
     text-transform: uppercase;
+    @media (max-width: 425px) {
+        font-size: ${fontSizes.xlarge};
+    }
 `;
 
 const SubTitle = styled.h2`

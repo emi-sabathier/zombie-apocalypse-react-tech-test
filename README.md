@@ -1,3 +1,28 @@
+# Brief du test
+Zombie apocalypse team sélection
+Objectif : Un jeu dans lequel le.a joueur.euse doit constituer une équipe pour survivre à la prochaine invasion de zombies
+Ce jeu est constitué de deux pages :
+
+- une page avec la liste des potentiels co-équipiers et co-équipières
+- une page pour afficher plus de détails sur un co-équipier ou une co-équipière
+- 1 header sur toutes les pages. Il indique le nombre de membres sélectionnés et titre du jeu
+- utiliser l'api https://reqres.in/ pour les datas
+- les pages ont un titre
+- 1 bordure pour montrer la personne sélectionnée
+- 3 personnes sélectionnables max
+- boutons add / delete membre
+- bouton retour
+
+Pour lancer l'app: 
+- Cloner l'app ```git clone https://github.com/emi-sabathier/zombie-apocalypse-tech-test.git```
+- Utiliser votre terminal, placez vous dans le dossier cloné ```cd /dossier cloné```
+- ```yarn install``` ou ```npm install``` pour installer les packages
+- ```yarn start``` ou ```npm start```, le serveur se lance
+
+# Outils utilisés
+
+React (TS), Context & useReducer pour le store, styled components, React-toastify
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
