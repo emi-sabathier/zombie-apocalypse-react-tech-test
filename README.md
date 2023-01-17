@@ -16,6 +16,7 @@ Ce jeu est constitué de deux pages :
 Pour lancer l'app: 
 - Cloner l'app ```git clone https://github.com/emi-sabathier/zombie-apocalypse-tech-test.git```
 - Utiliser votre terminal, placez vous dans le dossier cloné ```cd /dossier cloné```
+- ```yarn install``` ou ```npm install``` pour installer les packages
 - ```yarn start``` ou ```npm start```, le serveur se lance
 
 # Outils utilisés
