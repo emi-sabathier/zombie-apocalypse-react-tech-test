@@ -15,7 +15,7 @@ type UITeamMateCardProps = {
     mate: Mate;
 };
 
-export type SectionProps = {
+export type IsMateSelectedProps = {
     isMateSelected: boolean;
 };
 
@@ -36,7 +36,7 @@ export function UIMateCard({ mate }: UITeamMateCardProps): ReactElement {
     );
 }
 
-const CardContainer = styled.section<SectionProps>`
+const CardContainer = styled.section<IsMateSelectedProps>`
     border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
     padding: ${PADDING}px;
     border-radius: ${RADIUS}px;

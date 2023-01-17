@@ -8,6 +8,7 @@ import { useIsMateExistsInStore } from '../../../hooks/useIsMateExistsInStore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UIToast } from '../UIToast/UIToast';
+import { dictionary } from '../../../assets/dictionary';
 
 const IMAGE_WIDTH = 30;
 
@@ -15,12 +16,12 @@ type UIAddDeleteMateProps = {
     mate: Mate;
 };
 
-export function UIAddDeleteMate({ mate }: UIAddDeleteMateProps) {
+export function UIAddDeleteMate({ mate }: UIAddDeleteMateProps): ReactElement {
     const { state, dispatch } = useContext(StoreContext);
     const isMateExists = useIsMateExistsInStore(mate.id);
 
     function ErrorMessage() {
-        return <p>Vous ne pouvez ajouter que 3 co-équipier(e)s</p>;
+        return <p>{dictionary.toast.text}</p>;
     }
 
     function addMate(): void {

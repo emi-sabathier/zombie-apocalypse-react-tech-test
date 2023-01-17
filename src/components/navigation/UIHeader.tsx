@@ -64,9 +64,12 @@ const ArrowIcon = styled.img`
 const Title = styled.h1`
     text-align: center;
     color: ${palette.white};
-    font-size: ${fontSizes.headerTitle};
+    font-size: ${fontSizes.xxlarge};
     font-weight: 700;
     text-transform: uppercase;
+    @media (max-width: 425px) {
+        font-size: ${fontSizes.xlarge};
+    }
 `;
 
 const SubTitle = styled.h2`

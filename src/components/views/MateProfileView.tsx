@@ -10,14 +10,13 @@ import { ResponseSingleMateModel } from '../../Model/ResponseMatesListModel';
 import { useIsMateExistsInStore } from '../../hooks/useIsMateExistsInStore';
 import { API_URL_SINGLE_MATE } from '../../constants/constants';
 import { UIAddDeleteMate } from '../shared/UIAddDeleteMate/UIAddDeleteMate';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { IsMateSelectedProps } from '../UIMateCard';
+import { dictionary } from '../../assets/dictionary';
 
 const RADIUS = 5;
 const WIDTH = '50%';
 const PADDING = 10;
-
-type ProfileContainerProps = {
-    isMateSelected: boolean;
-};
 
 export function MateProfileView() {
     const { id } = useParams();
@@ -31,11 +30,13 @@ export function MateProfileView() {
         last_name: '',
     };
 
+    useDocumentTitle(`Profil de ${response?.data?.first_name} ${response?.data?.last_name}`);
+
     return (
         <UIContainer>
             {error && (
                 <BackContainer>
-                    <p>Une erreur est survenue</p>
+                    <p>{dictionary.error.text}</p>
                 </BackContainer>
             )}
             {isLoading && !error && <Spinner />}
@@ -71,13 +72,18 @@ const BackContainer = styled.div`
     flex-direction: column;
 `;
 
-const ProfileContainer = styled.section<ProfileContainerProps>`
+const ProfileContainer = styled.section<IsMateSelectedProps>`
     border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
     width: ${WIDTH};
     background-color: ${palette.white};
     border-radius: ${RADIUS}px;
     padding: ${PADDING}px;
     display: flex;
+    @media (max-width: 425px) {
+        align-items: center;
+        flex: 1;
+        flex-direction: column;
+    }
 `;
 
 const ButtonsContainer = styled.div`

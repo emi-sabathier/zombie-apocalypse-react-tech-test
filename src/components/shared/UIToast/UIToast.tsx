@@ -4,16 +4,16 @@ import { ToastContainer } from 'react-toastify';
 export function UIToast(): ReactElement {
     return (
         <ToastContainer
+            closeButton={false}
             progressStyle={{ backgroundColor: 'red' }}
-            position="bottom-center"
-            autoClose={5000}
+            position="top-center"
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
             pauseOnFocusLoss
             draggable
-            pauseOnHover
             theme="dark"
         />
     );
