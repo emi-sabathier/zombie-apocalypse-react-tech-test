@@ -4,7 +4,7 @@ import { palette } from '../assets/styles/palette';
 import { Mate } from '../Model/MateModel';
 import { useNavigate } from 'react-router-dom';
 import { UIAddDeleteMate } from './shared/UIAddDeleteMate/UIAddDeleteMate';
-import { useIsExists } from '../hooks/useIsExists';
+import { useIsMateExistsInStore } from '../hooks/useIsMateExistsInStore';
 
 const RADIUS = 5;
 const PADDING = 10;
@@ -21,15 +21,12 @@ export type SectionProps = {
 
 export function UIMateCard({ mate }: UITeamMateCardProps): ReactElement {
     const navigate = useNavigate();
-    const isMateExists = useIsExists(mate);
-    const { avatar, email, first_name, id, last_name } = mate;
+    const isMateExists = useIsMateExistsInStore(mate.id);
 
     return (
         <CardContainer isMateSelected={isMateExists}>
             <P>{`${mate.first_name}`}</P>
-            <AvatarButton
-                type="button"
-                onClick={() => navigate(`/mates/${mate.id}`, { state: { avatar, email, first_name, id, last_name } })}>
+            <AvatarButton type="button" onClick={() => navigate(`/mates/${mate.id}`)}>
                 <Avatar src={`${mate.avatar}`} alt={`${mate.avatar}`} />
             </AvatarButton>
             <ButtonsContainer>

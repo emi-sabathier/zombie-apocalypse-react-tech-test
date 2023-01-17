@@ -1,10 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+import { Mate } from '../Model/MateModel';
+
+export type MatesListState = {
+    matesList: Mate[];
+};
+
+export type ActionType = {
+    type: string;
+    payload: Mate;
+};
+
 export const initialState = {
     matesList: [],
 };
 
-export function storeReducer(state, action) {
+export function storeReducer(state: MatesListState, action: ActionType) {
     switch (action.type) {
         case 'ADD_MATE':
             return {
@@ -13,7 +22,7 @@ export function storeReducer(state, action) {
             };
 
         case 'DELETE_MATE': {
-            const updatedList = state.matesList.filter(mate => mate.id !== action.payload);
+            const updatedList: Mate[] = state.matesList.filter(mate => mate.id !== action.payload.id);
             return {
                 ...state,
                 matesList: updatedList,

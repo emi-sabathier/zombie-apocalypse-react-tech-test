@@ -1,9 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { createContext, ReactElement, ReactNode, useReducer } from 'react';
-import { initialState, storeReducer } from '../store/storeReducer';
+import React, { createContext, Dispatch, ReactElement, ReactNode, useReducer } from 'react';
+import { ActionType, initialState, MatesListState, storeReducer } from '../store/storeReducer';
 
-export const StoreContext = createContext();
+interface StoreContextType {
+    state: MatesListState;
+    dispatch: Dispatch<ActionType>;
+}
+
+export const StoreContext = createContext<StoreContextType>({} as StoreContextType);
 
 export function StoreProvider({ children }: { children: ReactNode }): ReactElement {
     const [state, dispatch] = useReducer(storeReducer, initialState);

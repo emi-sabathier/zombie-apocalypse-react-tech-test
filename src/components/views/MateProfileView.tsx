@@ -1,42 +1,77 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { UIContainer } from '../shared/UIContainer/UIContainer';
 import { palette } from '../../assets/styles/palette';
 import { fontSizes } from '../../assets/styles/fontSizes';
+import { useFetch } from '../../hooks/useFetch';
+import { useParams } from 'react-router-dom';
+import { Spinner } from '../Spinner';
+import { ResponseSingleMateModel } from '../../Model/ResponseMatesListModel';
+import { useIsMateExistsInStore } from '../../hooks/useIsMateExistsInStore';
+import { API_URL_SINGLE_MATE } from '../../constants/constants';
 import { UIAddDeleteMate } from '../shared/UIAddDeleteMate/UIAddDeleteMate';
-import { useIsExists } from '../../hooks/useIsExists';
-import { SectionProps } from '../UIMateCard';
 
 const RADIUS = 5;
 const WIDTH = '50%';
 const PADDING = 10;
 
+type ProfileContainerProps = {
+    isMateSelected: boolean;
+};
+
 export function MateProfileView() {
-    const { state } = useLocation();
-    const isMateExists = useIsExists(state);
-    useDocumentTitle(`Profil de ${state.first_name} ${state.last_name}`);
+    const { id } = useParams();
+    const { error, response, isLoading } = useFetch<ResponseSingleMateModel>(`${API_URL_SINGLE_MATE}${id}`);
+    const isMateExists = useIsMateExistsInStore(Number(id));
+    const res = response?.data ?? {
+        id: 0,
+        avatar: '',
+        email: '',
+        first_name: '',
+        last_name: '',
+    };
 
     return (
         <UIContainer>
-            <ProfileContainer isMateSelected={isMateExists}>
-                <Avatar src={`${state.avatar}`} alt={`${state.first_name} ${state.last_name} avatar`} />
-                <DetailsContainer>
-                    <NameTitle>
-                        {state.first_name} {state.last_name}
-                    </NameTitle>
-                    <a href={`mailto:${state.email}`}>{state.email}</a>
-                    <ButtonsContainer>
-                        <UIAddDeleteMate mate={state} />
-                    </ButtonsContainer>
-                </DetailsContainer>
-            </ProfileContainer>
+            {error && (
+                <BackContainer>
+                    <p>Une erreur est survenue</p>
+                </BackContainer>
+            )}
+            {isLoading && !error && <Spinner />}
+            {!isLoading && (
+                <ProfileContainer isMateSelected={isMateExists}>
+                    <Avatar
+                        src={`${response?.data?.avatar}`}
+                        alt={`${response?.data?.first_name} ${response?.data?.last_name} avatar`}
+                    />
+                    <DetailsContainer>
+                        <NameTitle>
+                            {response?.data?.first_name} {response?.data?.last_name}
+                        </NameTitle>
+                        <a href={`mailto:${response?.data?.email}`}>{response?.data?.email}</a>
+                        <ButtonsContainer>
+                            <UIAddDeleteMate mate={res} />
+                        </ButtonsContainer>
+                    </DetailsContainer>
+                </ProfileContainer>
+            )}
         </UIContainer>
     );
 }
 
-const ProfileContainer = styled.section<SectionProps>`
+const BackContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    color: ${palette.white};
+    font-size: ${fontSizes.xlarge};
+    font-weight: 700;
+    flex-direction: column;
+`;
+
+const ProfileContainer = styled.section<ProfileContainerProps>`
     border: ${props => (props.isMateSelected ? '5px solid red' : '5px solid white')};
     width: ${WIDTH};
     background-color: ${palette.white};

@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
 import React, { ReactElement } from 'react';
 import { UIContainer } from '../shared/UIContainer/UIContainer';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
@@ -8,24 +6,21 @@ import styled from 'styled-components';
 import { useFetch } from '../../hooks/useFetch';
 import { Spinner } from '../Spinner';
 import { Mate } from '../../Model/MateModel';
-import { ApiResponseModel } from '../../Model/ApiResponseModel';
-import { API_URL } from '../../constants/constants';
+import { ResponseMatesListModel } from '../../Model/ResponseMatesListModel';
+import { API_URL_LIST } from '../../constants/constants';
 
 export function HomeView(): ReactElement {
     useDocumentTitle('Zombie Apocalypse - Accueil');
-    const { dataList, isLoading } = useFetch<ApiResponseModel>(API_URL);
-
+    const { error, response, isLoading } = useFetch<ResponseMatesListModel>(API_URL_LIST);
     return (
         <UIContainer>
-            {isLoading ? (
-                <Spinner />
-            ) : (
-                <CardsContainer>
-                    {dataList?.data.map((mate: Mate) => (
-                        <UIMateCard key={mate.id} mate={mate} />
-                    ))}
-                </CardsContainer>
-            )}
+            {isLoading && <Spinner />}
+            {error && <p>Erreur</p>}
+            <CardsContainer>
+                {response?.data?.map((mate: Mate) => (
+                    <UIMateCard key={mate.id} mate={mate} />
+                ))}
+            </CardsContainer>
         </UIContainer>
     );
 }
