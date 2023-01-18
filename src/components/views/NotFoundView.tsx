@@ -11,7 +11,7 @@ export function NotFoundView() {
     );
 }
 
-const Container = styled.div`
+export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,6 +21,6 @@ const Container = styled.div`
     font-weight: 700;
 `;
 
-const P = styled.p`
+export const P = styled.p`
     font-size: ${fontSizes.xlarge};
 `;
